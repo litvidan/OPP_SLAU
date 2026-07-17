@@ -60,10 +60,10 @@ int main(int argc, char** argv) {
 
 	double* AChunk = (double*)malloc(sizeof(double) * blockSize * N);
 	double* localTmp = (double*)malloc(sizeof(double) * blockSize);
-	double* b = (double*)malloc(sizeof(double) * N);//Дублируются в каждом процессе
+	double* b = (double*)malloc(sizeof(double) * N);//Р”СѓР±Р»РёСЂСѓСЋС‚СЃСЏ РІ РєР°Р¶РґРѕРј РїСЂРѕС†РµСЃСЃРµ
 	double* y = (double*)malloc(sizeof(double) * N);
 	double* Ay = (double*)malloc(sizeof(double) * N);
-	double* x = (double*)calloc(N, sizeof(double));//Дублируются в каждом процессе
+	double* x = (double*)calloc(N, sizeof(double));//Р”СѓР±Р»РёСЂСѓСЋС‚СЃСЏ РІ РєР°Р¶РґРѕРј РїСЂРѕС†РµСЃСЃРµ
 
 	double bNorm = 0;
 	double criteria = 0;
@@ -76,12 +76,12 @@ int main(int argc, char** argv) {
 	double localDivisor = 0;
 	double tmp;
 
-	//Один из вариантов заполнения
+	//РћРґРёРЅ РёР· РІР°СЂРёР°РЅС‚РѕРІ Р·Р°РїРѕР»РЅРµРЅРёСЏ
 	fill2(AChunk, b, blockSize, blockLow, rank);
 
 	start = clock();
 
-	//Расчёт нормы вектора b
+	//Р Р°СЃС‡С‘С‚ РЅРѕСЂРјС‹ РІРµРєС‚РѕСЂР° b
 	for (int i = 0; i < blockSize; i++)
 		localBNorm += b[blockLow + i] * b[blockLow + i];
 	MPI_Allreduce(&localBNorm, &bNorm, 1, MPI_DOUBLE, MPI_SUM, MPI_COMM_WORLD);
@@ -119,7 +119,7 @@ int main(int argc, char** argv) {
 			localTmp[i] = x[i + blockLow] - tau * y[i + blockLow];
 		MPI_Allgather(localTmp, blockSize, MPI_DOUBLE, x, blockSize, MPI_DOUBLE, MPI_COMM_WORLD);
 
-		//Пересчёт критерия
+		//РџРµСЂРµСЃС‡С‘С‚ РєСЂРёС‚РµСЂРёСЏ
 		localCriteria = 0;
 		for (int i = 0; i < blockSize; i++) {
 			tmp = 0;
