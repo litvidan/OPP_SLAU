@@ -53,7 +53,7 @@ int main(int argc, char** argv) {
 	int blockSize = N / size;
 	int blockLow = rank * N / size;
 
-	double* AChunk   = (double*)malloc(sizeof(double) * blockSize * N);//В данной версии программы у каждого процесса столбцы матрицы, а не строки
+	double* AChunk   = (double*)malloc(sizeof(double) * blockSize * N);//Р’ РґР°РЅРЅРѕР№ РІРµСЂСЃРёРё РїСЂРѕРіСЂР°РјРјС‹ Сѓ РєР°Р¶РґРѕРіРѕ РїСЂРѕС†РµСЃСЃР° СЃС‚РѕР»Р±С†С‹ РјР°С‚СЂРёС†С‹, Р° РЅРµ СЃС‚СЂРѕРєРё
 	double* bChunk   = (double*)malloc(sizeof(double) * blockSize);
 	double* xChunk   = (double*)calloc(blockSize, sizeof(double));
 	double* yChunk   = (double*)malloc(sizeof(double) * blockSize);
@@ -75,7 +75,7 @@ int main(int argc, char** argv) {
 
 	start = clock();
 
-	//Расчёт нормы вектора b
+	//Р Р°СЃС‡С‘С‚ РЅРѕСЂРјС‹ РІРµРєС‚РѕСЂР° b
 	for (int i = 0; i < blockSize; i++)
 		localBNorm += bChunk[i] * bChunk[i];
 	MPI_Allreduce(&localBNorm, &bNorm, 1, MPI_DOUBLE, MPI_SUM, MPI_COMM_WORLD);
@@ -96,7 +96,7 @@ int main(int argc, char** argv) {
 		}
 
 		//t^n = (y^n, Ay^n)/(Ay^n, Ay^n)
-		// Расчёт Ay^n
+		// Р Р°СЃС‡С‘С‚ Ay^n
 		for (long long int i = 0; i < blockSize; i++) {
 			for (long long int j = 0; j < N; j++) {
 				if (i == 0) AyChunk[j] = 0;
@@ -104,9 +104,9 @@ int main(int argc, char** argv) {
 			}
 		}
 		for (long long int i = 0; i < size; i++) {
-			MPI_Reduce((AyChunk + i * N / size), AxbChunk, N / size, MPI_DOUBLE, MPI_SUM, i, MPI_COMM_WORLD);//Axb используется, чтобы сэкономить память
+			MPI_Reduce((AyChunk + i * N / size), AxbChunk, N / size, MPI_DOUBLE, MPI_SUM, i, MPI_COMM_WORLD);//Axb РёСЃРїРѕР»СЊР·СѓРµС‚СЃСЏ, С‡С‚РѕР±С‹ СЃСЌРєРѕРЅРѕРјРёС‚СЊ РїР°РјСЏС‚СЊ
 		}
-		// Расчёт делимого и делителя
+		// Р Р°СЃС‡С‘С‚ РґРµР»РёРјРѕРіРѕ Рё РґРµР»РёС‚РµР»СЏ
 		localDivisible = 0;
 		localDivisor = 0;
 		for (long long int i = 0; i < blockSize; i++) {
@@ -122,7 +122,7 @@ int main(int argc, char** argv) {
 			xChunk[i] = xChunk[i] - tau * yChunk[i];
 		}
 
-		//Расчёт критерия: ||Ax^n-b||
+		//Р Р°СЃС‡С‘С‚ РєСЂРёС‚РµСЂРёСЏ: ||Ax^n-b||
 		localCriteria = 0;
 		for (long long int i = 0; i < blockSize; i++) {
 			for (long long j = 0; j < N; j++) {
