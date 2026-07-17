@@ -4,8 +4,8 @@
 #include <math.h>
 #include <malloc.h>
 
-void fileCreation1(int);//Модельная задача с заданным решением
-void fileCreation2(int);//Модельная задача с произвольным решением
+void fileCreation1(int);//РњРѕРґРµР»СЊРЅР°СЏ Р·Р°РґР°С‡Р° СЃ Р·Р°РґР°РЅРЅС‹Рј СЂРµС€РµРЅРёРµРј
+void fileCreation2(int);//РњРѕРґРµР»СЊРЅР°СЏ Р·Р°РґР°С‡Р° СЃ РїСЂРѕРёР·РІРѕР»СЊРЅС‹Рј СЂРµС€РµРЅРёРµРј
 
 int main() {
 	int N = 10000;
@@ -16,7 +16,7 @@ int main() {
 void fileCreation1(int N) {
 	FILE* out = fopen("in.txt", "w");
 
-	//Модельная задача с заданным решением
+	//РњРѕРґРµР»СЊРЅР°СЏ Р·Р°РґР°С‡Р° СЃ Р·Р°РґР°РЅРЅС‹Рј СЂРµС€РµРЅРёРµРј
 	fprintf(out, "%d\n", N);
 	for (int i = 0; i < N; i++)
 		fprintf(out, "%lf\n", N+1);
@@ -49,7 +49,7 @@ void fileCreation2(int N) {
 		b[i] = sum;
 	}
 
-	//Модельная задача с заданным решением
+	//РњРѕРґРµР»СЊРЅР°СЏ Р·Р°РґР°С‡Р° СЃ Р·Р°РґР°РЅРЅС‹Рј СЂРµС€РµРЅРёРµРј
 	fprintf(out, "%d\n", N);
 	for (int i = 0; i < N; i++)
 		fprintf(out, "%lf\n", b[i]);
