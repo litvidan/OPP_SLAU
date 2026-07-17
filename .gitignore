@@ -1,0 +1,16 @@
+Debug/ 
+*.clog2
+*.slog2
+*.out
+*.txt
+*.vcxproj
+*.vcxproj.filters
+*.vcxproj.user
+*.sbatch
+.vc/
+
+# Старые версии
+
+MPI_V0.1.c
+MPI_V1.1.c
+MPE_V2.c
